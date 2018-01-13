@@ -51,6 +51,7 @@ champ_ids_and_names = {
     38 : "Kassadin",
     55 : "Katarina",
     10 : "Kayle",
+    141 : "Kayn",
     85 : "Kennen",
     121 : "Kha'zix",
     203 : "Kindred",
@@ -78,10 +79,12 @@ champ_ids_and_names = {
     56 : "Nocturne",
     20 : "Nunu",
     2 : "Olaf",
+    516 : "Ornn",
     61 : "Orianna",
     80 : "Pantheon",
     78 : "Poppy",
     133 : "Quinn",
+    497 : "Rakan",
     33 : "Rammus",
     421: "Rek'sai",
     58 : "Renekton",
@@ -132,5 +135,6 @@ champ_ids_and_names = {
     238 : "Zed",
     115 : "Ziggs",
     26 : "Zilean",
+    142 : "Zoe",
     143 : "Zyra"
 }
