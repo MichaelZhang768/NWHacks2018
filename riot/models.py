@@ -12,6 +12,10 @@ class Match(models.Model):
     champ_id = models.IntegerField(null=False)
     account_id = models.IntegerField(null=False)
 
+    class Meta:
+        unique_together = ('game_id', 'account_id')
+
+    
 class Champion(models.Model):
     champion_id = models.IntegerField(unique=True, null=False)
     name = models.CharField(unique=True, null=False, max_length=12)

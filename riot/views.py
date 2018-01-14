@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
-
+from riot.riot import RiotManager
 from riot import config
 from riot.models import Champion
 from riot.data import DataProcessingManager
@@ -35,6 +35,20 @@ def get_palette(request):
         results['error'] = str(e)
         resp = HttpResponse(json.dumps(results), status=400)
 
+<<<<<<< Updated upstream
     resp['Access-Control-Allow-Origin'] = "*"
     resp['Content-Type'] = "application/json"
     return resp
+=======
+    return HttpResponse(json.dumps(results))
+
+def get_and_store_summoner_data(request):
+    rm = RiotManager()
+    name = request.GET.get('name')
+
+    try:
+        return rm.get_and_store_summoner_data(name)
+    except Exception as e:
+        results = {'error': str(e)}
+        return HttpResponse(json.dumps(results), content_type='application/json')
+>>>>>>> Stashed changes
