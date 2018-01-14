@@ -16,6 +16,8 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
+secrets/*
+!*.gitkeep
 
 # SQLite
 riotData
