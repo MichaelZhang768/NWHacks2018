@@ -136,9 +136,29 @@ class RiotManager(object):
                 time.sleep(60)
             
         self.add_match_info_to_db(new_match_dicts)
-        matchDicts.append(new_match_dicts)
+        matchDicts.extend(new_match_dicts)
 
-        response = {'result' : matchDicts}
+        champ_games_played = {}
+        for matchDict in matchDicts:
+            if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in champ_games_played:
+                champ_games_played[config.CHAMP_ID_TO_NAME[matchDict['champId']]] = 1
+            else:
+                champ_games_played[config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
+
+
+        champ_games_won = {}
+        for matchDict in matchDicts:
+            if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in champ_games_won:
+                champ_games_won[config.CHAMP_ID_TO_NAME[matchDict['champId']]] = 1
+            else:
+                champ_games_won[config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
+
+        
+
+        
+        response = {'result' : matchDicts,
+                    'champ_games_played' : champ_games_played,
+                    'champ_games_won' : champ_games_won}
 
         return HttpResponse(json.dumps(response), content_type='application/json')
         
