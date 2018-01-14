@@ -30,10 +30,11 @@ def get_palette(request):
         palette = dpm.get_palette_from_champion(champ_id=champ_id)
 
         results['results'] = palette.split()
+        resp = HttpResponse(json.dumps(results))
     except ValueError as e:
         results['error'] = str(e)
+        resp = HttpResponse(json.dumps(results), status=400)
 
-    resp = HttpResponse(json.dumps(results))
     resp['Access-Control-Allow-Origin'] = "*"
     resp['Content-Type'] = "application/json"
     return resp
