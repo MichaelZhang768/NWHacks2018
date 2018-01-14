@@ -35,12 +35,9 @@ def get_palette(request):
         results['error'] = str(e)
         resp = HttpResponse(json.dumps(results), status=400)
 
-<<<<<<< Updated upstream
     resp['Access-Control-Allow-Origin'] = "*"
     resp['Content-Type'] = "application/json"
     return resp
-=======
-    return HttpResponse(json.dumps(results))
 
 def get_and_store_summoner_data(request):
     rm = RiotManager()
@@ -51,4 +48,3 @@ def get_and_store_summoner_data(request):
     except Exception as e:
         results = {'error': str(e)}
         return HttpResponse(json.dumps(results), content_type='application/json')
->>>>>>> Stashed changes
