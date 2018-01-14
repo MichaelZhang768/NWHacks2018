@@ -33,4 +33,7 @@ def get_palette(request):
     except ValueError as e:
         results['error'] = str(e)
 
-    return HttpResponse(json.dumps(results))
+    resp = HttpResponse(json.dumps(results))
+    resp['Access-Control-Allow-Origin'] = "*"
+    resp['Content-Type'] = "application/json"
+    return resp
