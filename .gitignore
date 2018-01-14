@@ -5,6 +5,7 @@
 *.egg-info
 *.pot
 *.py[co]
+**/secrets.py
 .tox/
 __pycache__
 MANIFEST
