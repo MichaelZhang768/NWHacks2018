@@ -187,7 +187,9 @@ class RiotManager(object):
                     'champ_games_won' : champ_games_won,
                     'month_year_champs_played' : month_year_champs_played}
 
-        return HttpResponse(json.dumps(response), content_type='application/json')
+        http_resp = HttpResponse(json.dumps(response), content_type='application/json')
+        http_resp["Access-Control-Allow-Origin"] = "*"
+        return http_resp
         
             
             
