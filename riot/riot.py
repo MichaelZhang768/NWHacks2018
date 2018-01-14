@@ -121,19 +121,21 @@ class RiotManager(object):
 
         get_match_counter = 0
         for match in matches_to_fetch:
-            try:
-                match_data = rm.get_match(match['gameId'])
-                get_match_counter+=1
-                new_match_dicts.append({'gameId' : match['gameId'],
-                                'accountId' : account_id,   
-                                'result' : rm.get_won_match(account_id, match_data),
-                                'champId' : match['champion'],
-                                'timestamp' : datetime.datetime.fromtimestamp(match['timestamp']/1000.0).strftime("%Y-%m-%d")})
-                time.sleep(1.5)
-            except Exception as e:
-                print(get_match_counter)
-                print(e)
-                time.sleep(60)
+            if get_match_counter < 200:
+                try:
+                    match_data = rm.get_match(match['gameId'])
+                    get_match_counter+=1
+                    new_match_dicts.append({'gameId' : match['gameId'],
+                                    'accountId' : account_id,   
+                                    'result' : rm.get_won_match(account_id, match_data),
+                                    'champId' : match['champion'],
+                                    'timestamp' : datetime.datetime.fromtimestamp(match['timestamp']/1000.0).strftime("%Y-%m-%d")})
+                    time.sleep(2)
+                    print(get_match_counter)
+                except Exception as e:
+                    print(get_match_counter)
+                    print(e)
+                    time.sleep(20)
             
         self.add_match_info_to_db(new_match_dicts)
         matchDicts.extend(new_match_dicts)
