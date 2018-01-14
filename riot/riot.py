@@ -145,7 +145,6 @@ class RiotManager(object):
             else:
                 champ_games_played[config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
 
-
         champ_games_won = {}
         for matchDict in matchDicts:
             if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in champ_games_won:
@@ -153,12 +152,38 @@ class RiotManager(object):
             else:
                 champ_games_won[config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
 
-        
+        month_year_champs_played = {}
+        db_matches = Match.objects.filter(account_id=account_id).order_by('-timestamp')
+        match_dicts = []
+        for db_match in db_matches:
+            match_dicts.append({'gameId' : db_match.game_id,
+                               'accountId' : db_match.account_id,
+                               'result' : db_match.result,
+                               'timestamp' : db_match.timestamp.strftime("%Y-%m-%d"),
+                               'champId' : db_match.champ_id})
 
-        
+        year_month = ""
+        for matchDict in match_dicts:
+            if year_month != matchDict['timestamp'][0:7]:
+                year_month = matchDict['timestamp'][0:7]
+                if year_month not in month_year_champs_played:
+                    month_year_champs_played[year_month] = {}
+                    month_year_champs_played[year_month][config.CHAMP_ID_TO_NAME[matchDict['champId']]] = 1
+                else:
+                    if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in month_year_champs_played[year_month]:
+                        month_year_champs_played[year_month][config.CHAMP_ID_TO_NAME[matchDict['champId']]] = 1
+                    else:
+                        month_year_champs_played[year_month][config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
+            else:
+                if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in month_year_champs_played[year_month]:
+                    month_year_champs_played[year_month][config.CHAMP_ID_TO_NAME[matchDict['champId']]] = 1
+                else:
+                    month_year_champs_played[year_month][config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
+
         response = {'result' : matchDicts,
                     'champ_games_played' : champ_games_played,
-                    'champ_games_won' : champ_games_won}
+                    'champ_games_won' : champ_games_won,
+                    'month_year_champs_played' : month_year_champs_played}
 
         return HttpResponse(json.dumps(response), content_type='application/json')
         
