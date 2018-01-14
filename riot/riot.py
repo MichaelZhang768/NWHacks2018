@@ -149,9 +149,9 @@ class RiotManager(object):
 
         champ_games_won = {}
         for matchDict in matchDicts:
-            if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in champ_games_won:
+            if config.CHAMP_ID_TO_NAME[matchDict['champId']] not in champ_games_won and matchDict['result'] == True:
                 champ_games_won[config.CHAMP_ID_TO_NAME[matchDict['champId']]] = 1
-            else:
+            elif matchDict['result'] == True:
                 champ_games_won[config.CHAMP_ID_TO_NAME[matchDict['champId']]] += 1
 
         month_year_champs_played = {}
